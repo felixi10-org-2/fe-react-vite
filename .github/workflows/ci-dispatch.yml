@@ -1,0 +1,25 @@
+
+name: DevSecOps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devsecops-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # --- Stage 1: build-time scans in parallel -------------------------------
+  react_vite_ci:
+    name: react-vite-ci
+    needs: []
+    uses: felixi10-org-2/commons/.github/workflows/react-vite-ci.yml@main
+
+    permissions:
+      contents: read
